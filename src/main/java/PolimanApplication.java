@@ -17,6 +17,19 @@ public class PolimanApplication extends Application {
 
         stage.setTitle("PoliMan");
         stage.setScene(scene);
+
+        PolimanGame game = new PolimanGame();
+        game.enableDebug(true);
+
+        scene.setOnKeyPressed(event -> game.onKeyPressed(event.getCode()));
+        scene.setOnKeyReleased(event -> game.onKeyReleased(event.getCode()));
+
+        game.setup();
+        root.getChildren().add(game.getCanvas());
+
+        game.start();
+
+        stage.setResizable(false);
         stage.show();
     }
 

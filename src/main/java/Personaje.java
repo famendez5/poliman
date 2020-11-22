@@ -6,6 +6,11 @@ public abstract class Personaje {
     private int x;
     private int y;
 
+    public Personaje(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
     /**
      * Retorna la posición X del personaje
      */
