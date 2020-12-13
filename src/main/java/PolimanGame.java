@@ -100,13 +100,23 @@ public class PolimanGame extends AnimationTimer {
         graphicsContext = canvas.getGraphicsContext2D();
     }
 
+    public GameObject findOverlappingObject(GameObject other) {
+        for (GameObject gameObject: gameObjects) {
+            if (gameObject == other) continue;
+            if (gameObject.overlaps(other)) {
+                return gameObject;
+            }
+        }
+        return null;
+    }
+
     public GameObject getObjectAt(Posicion posicion) {
         for (GameObject gameObject : gameObjects) {
             boolean inX = gameObject.getX() <= posicion.getX() && gameObject.getX() + gameObject.getSize() > posicion.getX();
             boolean inY = gameObject.getY() <= posicion.getY() && gameObject.getY() + gameObject.getSize() > posicion.getY();
             if (inX && inY) {
-                System.out.println(gameObject.getX() + " < " + posicion.getX() + " && " + gameObject.getX() + " + " + gameObject.getSize() + " > " + posicion.getX());
-                System.out.println(gameObject.getY() + " < " + posicion.getY() + " && " + gameObject.getY() + " + " + gameObject.getSize() + " > " + posicion.getY());
+                // System.out.println(gameObject.getX() + " < " + posicion.getX() + " && " + gameObject.getX() + " + " + gameObject.getSize() + " > " + posicion.getX());
+                // System.out.println(gameObject.getY() + " < " + posicion.getY() + " && " + gameObject.getY() + " + " + gameObject.getSize() + " > " + posicion.getY());
                 return gameObject;
             }
         }
@@ -153,7 +163,9 @@ public class PolimanGame extends AnimationTimer {
 
         graphicsContext.setFill(Color.WHITE);
         graphicsContext.setFont(Font.font("Times New Roman", FontWeight.BOLD, SIZE));
-        graphicsContext.fillText("Teclas presionadas: " + getPressedKeysString(), PADDING, y + SIZE + PADDING);
+        // graphicsContext.fillText("Teclas presionadas: " + getPressedKeysString(), PADDING, y + SIZE + PADDING);
+        Poliman poliman = getPoliman();
+        graphicsContext.fillText("Posición Poliman: " + poliman.getX() + ", " + poliman.getY(), PADDING, y + SIZE + PADDING);
     }
 
     @Override

@@ -131,4 +131,153 @@ class PolimanTest {
         assertEquals(225, Poliman.getStartAngle(Direccion.IZQUIERDA));
         assertEquals(45, Poliman.getStartAngle(Direccion.DERECHA));
     }
+
+    @Test
+    void testNoSubirCuandoHayaUnaCeldaEnLaParteSupIzq() {
+        Poliman poliman = new Poliman();
+        PolimanGame game = new PolimanGame(new GameObject[][]{
+                {null, new Celda()},
+                {poliman, null},
+        });
+
+        // Ir hacia la derecha
+        game.onKeyPressed(KeyCode.RIGHT);
+        poliman.update(game);
+        // Debe moverse en el eje X
+        assertEquals(11, poliman.getX());
+        assertEquals(70, poliman.getY());
+
+        // Ir hacia arriba
+        game.onKeyReleased(KeyCode.RIGHT);
+        game.onKeyPressed(KeyCode.UP);
+        poliman.update(game);
+        // No debe moverse
+        assertEquals(11, poliman.getX());
+        assertEquals(70, poliman.getY());
+    }
+
+    @Test
+    void testPasarEntreCeldasHorizontalmente() {
+        Poliman poliman = new Poliman();
+        PolimanGame game = new PolimanGame(
+                new GameObject[][]{
+                        {null, new Celda()},
+                        {poliman, null},
+                        {new Celda(), new Celda()},
+                }
+        );
+
+        // Posición inicial
+        assertEquals(10, poliman.getX());
+        assertEquals(70, poliman.getY());
+        game.onKeyPressed(KeyCode.RIGHT);
+        poliman.update(game);
+        // Debe pasar entre las paredes
+        assertEquals(11, poliman.getX());
+        assertEquals(70, poliman.getY());
+    }
+
+    @Test
+    void testBajarHastaElLimiteDeLaPared() {
+        Poliman poliman = new Poliman();
+        PolimanGame game = new PolimanGame(new GameObject[][]{
+                {null},
+                {poliman},
+                {new Celda()},
+        });
+        // Posición inicial
+        assertEquals(10, poliman.getX());
+        assertEquals(70, poliman.getY());
+        // Ir hacia arriba
+        game.onKeyPressed(KeyCode.UP);
+        poliman.update(game);
+        // Debe subir
+        assertEquals(10, poliman.getX());
+        assertEquals(69, poliman.getY());
+
+        // Ir hacia abajo
+        game.onKeyReleased(KeyCode.UP);
+        game.onKeyPressed(KeyCode.DOWN);
+        poliman.update(game);
+        // Debe bajar hasta el limite de la pared
+        assertEquals(10, poliman.getX());
+        assertEquals(70, poliman.getY());
+    }
+
+    @Test
+    void testNoBajarSobreCelda() {
+        Poliman poliman = new Poliman();
+        Celda celda = new Celda();
+        PolimanGame game = new PolimanGame(new GameObject[][]{
+                {poliman},
+                {celda},
+                {new Celda()},
+        });
+
+        // Posición inicial de poliman
+        assertEquals(10, poliman.getX());
+        assertEquals(50, poliman.getY());
+        // Posición de la celda
+        assertEquals(10, celda.getX());
+        assertEquals(70, celda.getY());
+
+        game.onKeyPressed(KeyCode.DOWN);
+        poliman.update(game);
+        assertEquals(50, poliman.getY());
+    }
+
+    @Test
+    void testSubirDesdeAbajoDerecha() {
+        Poliman poliman = new Poliman();
+        PolimanGame game = new PolimanGame(new GameObject[][]{
+                {new Punto(), new Celda()},
+                {null, poliman},
+        });
+        assertEquals(30, poliman.getX());
+        assertEquals(70, poliman.getY());
+        game.onKeyPressed(KeyCode.UP);
+        poliman.update(game);
+        assertEquals(30, poliman.getX());
+        assertEquals(70, poliman.getY());
+
+        // Hacia la izquierda
+        game.onKeyReleased(KeyCode.UP);
+        game.onKeyPressed(KeyCode.LEFT);
+        poliman.update(game);
+        assertEquals(29, poliman.getX());
+        assertEquals(70, poliman.getY());
+
+        // Hacia arriba
+        game.onKeyReleased(KeyCode.LEFT);
+        game.onKeyPressed(KeyCode.UP);
+        poliman.update(game);
+        assertEquals(29, poliman.getX());
+        assertEquals(70, poliman.getY());
+    }
+
+
+    @Test
+    void testIrIzqHastaLimiteDePared() {
+        Poliman poliman = new Poliman();
+        PolimanGame game = new PolimanGame(new GameObject[][]{
+                {new Celda(), poliman},
+        });
+        // Posición inicial
+        assertEquals(30, poliman.getX());
+        // Ir hacia la derecha
+        game.onKeyPressed(KeyCode.RIGHT);
+        poliman.update(game);
+        // Debe moverse
+        assertEquals(31, poliman.getX());
+
+        // Ir hacia la izq
+        game.onKeyReleased(KeyCode.RIGHT);
+        game.onKeyPressed(KeyCode.LEFT);
+        poliman.update(game);
+        // Debe volver
+        assertEquals(30, poliman.getX());
+
+        // Continuando hacia la izq
+        poliman.update(game);
+    }
 }

@@ -3,6 +3,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
 
+import java.util.function.Predicate;
+import java.util.stream.Stream;
+
 /**
  * Poliman es el personaje principal del juego
  */
@@ -57,83 +60,67 @@ public class Poliman extends Personaje implements GameObject {
 
         direccion = nuevaDireccion;
 
+        // Guardamos la posición inicial
         Posicion posicion = new Posicion(getX(), getY());
-        Posicion nuevaPosicion = new Posicion(getX(), getY());
+        Posicion nuevaPosicion;
 
-        // velocity = this.velocity * getSize();
+        // Calculamos la nueva posición en base a la dirección
         switch (direccion) {
             case ARRIBA:
-                // this.setY(getY() - velocity);
-                if (game.getObjectAt(nuevaPosicion.plusY(-velocity)) instanceof Celda) {
-                    return;
-                }
-                nuevaPosicion.setY(getY() - velocity);
+                nuevaPosicion = posicion.plusY(-velocity);
                 break;
             case ABAJO:
-                if (game.getObjectAt(nuevaPosicion.plusY(velocity + getSize())) instanceof Celda) {
-                    return;
-                }
-                // this.setY(getY() + velocity);
-                nuevaPosicion.setY(getY() + velocity);
+                nuevaPosicion = posicion.plusY(velocity);
                 break;
             case IZQUIERDA:
-                if (game.getObjectAt(nuevaPosicion.plusX(-velocity)) instanceof Celda) {
-                    return;
-                }
-                // this.setX(getX() - velocity);
-                nuevaPosicion.setX(getX() - velocity);
+                nuevaPosicion = posicion.plusX(-velocity);
                 break;
             case DERECHA:
-                if (game.getObjectAt(nuevaPosicion.plusX(velocity + getSize())) instanceof Celda) {
-                    return;
-                }
-                // this.setX(getX() + velocity);
-                nuevaPosicion.setX(getX() + velocity);
+                nuevaPosicion = posicion.plusX(velocity);
                 break;
+            default:
+                return;
         }
 
-        /*GameObject gameObject = game.getObjectAt(nuevaPosicion);
-        //List<GameObject> gameObjects = game.getObjectsAt(nuevaPosicion);
-        //boolean isCelda = gameObjects.stream().anyMatch(Celda.class::isInstance);
-        System.out.println("Actual: " + posicion.getX() + ", " + posicion.getY());
-        //System.out.println(gameObjects);
-        if (gameObject instanceof Celda) {
-            ((Celda) gameObject).setColor("ff00ff");
-            System.out.println("A");
-            System.out.println("Nueva: " + nuevaPosicion.getX() + ", " + nuevaPosicion.getY());
-            System.out.println("Object: " + gameObject.getX() + ", " + gameObject.getY());
-            return;
-        }
-
-        gameObject = game.getObjectAt(nuevaPosicion.plusY(getSize()));
-        if (gameObject instanceof Celda) {
-            ((Celda) gameObject).setColor("ff00ff");
-            System.out.println("B");
-            System.out.println("Nueva: " + nuevaPosicion.getX() + ", " + nuevaPosicion.getY());
-            System.out.println("Object: " + gameObject.getX() + ", " + gameObject.getY());
-            return;
-        }
-
-        gameObject = game.getObjectAt(nuevaPosicion.plusX(getSize()));
-        if (gameObject instanceof Celda) {
-            ((Celda) gameObject).setColor("ff00ff");
-            System.out.println("C");
-            System.out.println("Nueva: " + nuevaPosicion.getX() + ", " + nuevaPosicion.getY());
-            System.out.println("Object: " + gameObject.getX() + ", " + gameObject.getY());
-            return;
-        }
-
-        gameObject = game.getObjectAt(nuevaPosicion.plusX(getSize()).plusY(getSize()));
-        if (gameObject instanceof Celda) {
-            ((Celda) gameObject).setColor("ff00ff");
-            System.out.println("D");
-            System.out.println("Nueva: " + nuevaPosicion.getX() + ", " + nuevaPosicion.getY());
-            System.out.println("Object: " + gameObject.getX() + ", " + gameObject.getY());
-            return;
-        }*/
-
+        // Asignamos la nueva posición
         this.setX(nuevaPosicion.getX());
         this.setY(nuevaPosicion.getY());
+
+        Predicate<GameObject> overlappingCellPredicate = (obj) -> obj != this && obj.overlaps(this) && obj instanceof Celda;
+
+        // Si en la nueva posición hay una celda
+        if (game.gameObjects.stream().anyMatch(overlappingCellPredicate)) {
+            // En modo debug, coloreamos la celda que impide que nos movamos
+            if (game.isDebugEnabled()) {
+                Celda m = (Celda) game.gameObjects.stream().filter(overlappingCellPredicate).findFirst().get();
+                System.out.println(m.getClass().getSimpleName() + m.getPosicion());
+                m.setColor("ff0000");
+                game.gameObjects.stream().filter(Celda.class::isInstance).forEach((c) -> {
+                    if (c != m) ((Celda) c).setColor("1D4ED8");
+                });
+            }
+
+            // Devolvemos el objeto a la posición inicial
+            this.setX(posicion.getX());
+            this.setY(posicion.getY());
+        }
+
+        // Si estamos en modo debug, para tener más precisión
+        // las flechas actualizan solo una vez el juego
+        if (game.isDebugEnabled()) {
+            if (game.hasKeyPressed(KeyCode.UP)) {
+                game.onKeyReleased(KeyCode.UP);
+            }
+            if (game.hasKeyPressed(KeyCode.LEFT)) {
+                game.onKeyReleased(KeyCode.LEFT);
+            }
+            if (game.hasKeyPressed(KeyCode.DOWN)) {
+                game.onKeyReleased(KeyCode.DOWN);
+            }
+            if (game.hasKeyPressed(KeyCode.RIGHT)) {
+                game.onKeyReleased(KeyCode.RIGHT);
+            }
+        }
     }
 
     /**
