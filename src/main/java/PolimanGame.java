@@ -77,25 +77,6 @@ public class PolimanGame extends AnimationTimer {
                 gameObjects.add(col);
             }
         }
-<<<<<<< HEAD
-
-        /*for (int i = 0; i < cells; i++) {
-            gameObjects.add(new Celda(x + i * size, y, size));
-        }
-        for (int i = 0; i < cells; i++) {
-            gameObjects.add(new Punto(x + i * size, y + size, size));
-        }
-        for (int i = 0; i < cells; i++) {
-            gameObjects.add(new PuntoGrande(x + i * size, y + size * 2, size));
-        }
-        for (int i = 0; i < cells; i++) {
-            gameObjects.add(new Poliman(x + i * size, y + size * 3, size));
-        }
-        for (int i = 0; i < cells; i++) {
-            gameObjects.add(new Fantasma(i % 2 == 0 ? "ff0000" : "FCD34D", "Billy", x + i * size, y + size * 4, size));
-        }*/
-=======
->>>>>>> 8a906aa08749664f810499885c9e4efd7d77caed
     }
 
     public void setup() {
@@ -103,52 +84,17 @@ public class PolimanGame extends AnimationTimer {
         graphicsContext = canvas.getGraphicsContext2D();
     }
 
-<<<<<<< HEAD
-    public GameObject findOverlappingObject(GameObject other) {
-        for (GameObject gameObject: gameObjects) {
-            if (gameObject == other) continue;
-            if (gameObject.overlaps(other)) {
-                return gameObject;
-            }
-        }
-        return null;
-    }
-
-=======
->>>>>>> 8a906aa08749664f810499885c9e4efd7d77caed
     public GameObject getObjectAt(Posicion posicion) {
         for (GameObject gameObject : gameObjects) {
             boolean inX = gameObject.getX() <= posicion.getX() && gameObject.getX() + gameObject.getSize() > posicion.getX();
             boolean inY = gameObject.getY() <= posicion.getY() && gameObject.getY() + gameObject.getSize() > posicion.getY();
             if (inX && inY) {
-<<<<<<< HEAD
-                // System.out.println(gameObject.getX() + " < " + posicion.getX() + " && " + gameObject.getX() + " + " + gameObject.getSize() + " > " + posicion.getX());
-                // System.out.println(gameObject.getY() + " < " + posicion.getY() + " && " + gameObject.getY() + " + " + gameObject.getSize() + " > " + posicion.getY());
-=======
->>>>>>> 8a906aa08749664f810499885c9e4efd7d77caed
                 return gameObject;
             }
         }
         return null;
     }
 
-<<<<<<< HEAD
-    public List<GameObject> getObjectsAt(Posicion posicion) {
-        List<GameObject> matches = new LinkedList<>();
-        for (GameObject gameObject : gameObjects) {
-            boolean inX = gameObject.getX() <= posicion.getX() && gameObject.getX() + gameObject.getSize() > posicion.getX();
-            boolean inY = gameObject.getY() <= posicion.getY() && gameObject.getY() + gameObject.getSize() > posicion.getY();
-            if (inX && inY) {
-                System.out.println(gameObject.getX() + " <= " + posicion.getX() + " && " + gameObject.getX() + " + " + gameObject.getSize() + " > " + posicion.getX());
-                System.out.println(gameObject.getY() + " <= " + posicion.getY() + " && " + gameObject.getY() + " + " + gameObject.getSize() + " > " + posicion.getY());
-                matches.add(gameObject);
-            }
-        }
-        return matches;
-    }
-
-=======
->>>>>>> 8a906aa08749664f810499885c9e4efd7d77caed
     public Canvas getCanvas() {
         return canvas;
     }
@@ -182,7 +128,6 @@ public class PolimanGame extends AnimationTimer {
 
     @Override
     public void handle(long now) {
-<<<<<<< HEAD
         if(Fantasma.ghostSameCell){
             return;
         }else{
@@ -201,23 +146,6 @@ public class PolimanGame extends AnimationTimer {
                 gameObject.render(graphicsContext);
             }
         }
-
-=======
-        graphicsContext.clearRect(0, 0, WIDTH, getHeight());
-        graphicsContext.setFill(Color.BLACK);
-        graphicsContext.fillRect(0, 0, WIDTH, getHeight());
-
-        renderStatusBar();
-
-        if (isDebugEnabled()) {
-            renderDebugBar();
-        }
-
-        for (GameObject gameObject : gameObjects) {
-            gameObject.update(this);
-            gameObject.render(graphicsContext);
-        }
->>>>>>> 8a906aa08749664f810499885c9e4efd7d77caed
     }
 
     private String getPressedKeysString() {
@@ -228,13 +156,8 @@ public class PolimanGame extends AnimationTimer {
         pressedKeys.add(keyCode);
     }
 
-<<<<<<< HEAD
-    public void onKeyReleased(KeyCode keyCode) {
-        pressedKeys.remove(keyCode);
-=======
     public void onKeyReleased(KeyCode ...keyCodes) {
         pressedKeys.removeAll(Arrays.asList(keyCodes));
->>>>>>> 8a906aa08749664f810499885c9e4efd7d77caed
     }
 
     public boolean hasKeyPressed(KeyCode... keyCode) {
