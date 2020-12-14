@@ -19,6 +19,8 @@ public class PolimanApplication extends Application {
         stage.setScene(scene);
 
         PolimanGame game = new PolimanGame();
+        game.getPoliman().setVelocity(20);
+        game.getPoliman().setReleaseOnUpdate(true);
         game.enableDebug(true);
 
         scene.setOnKeyPressed(event -> game.onKeyPressed(event.getCode()));

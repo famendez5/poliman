@@ -280,4 +280,16 @@ class PolimanTest {
         // Continuando hacia la izq
         poliman.update(game);
     }
+
+    @Test
+    void testReleaseKeysOnUpdate() {
+        PolimanGame game = new PolimanGame();
+        Poliman poliman = game.getPoliman();
+        poliman.setReleaseOnUpdate(true);
+
+        game.onKeyPressed(KeyCode.UP);
+        poliman.update(game);
+
+        assertFalse(game.hasKeyPressed(KeyCode.UP));
+    }
 }

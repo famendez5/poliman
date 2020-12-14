@@ -152,8 +152,8 @@ public class PolimanGame extends AnimationTimer {
         pressedKeys.add(keyCode);
     }
 
-    public void onKeyReleased(KeyCode keyCode) {
-        pressedKeys.remove(keyCode);
+    public void onKeyReleased(KeyCode ...keyCodes) {
+        pressedKeys.removeAll(Arrays.asList(keyCodes));
     }
 
     public boolean hasKeyPressed(KeyCode... keyCode) {

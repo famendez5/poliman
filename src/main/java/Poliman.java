@@ -14,6 +14,8 @@ public class Poliman extends Personaje implements GameObject {
 
     private int size;
 
+    private boolean releaseOnUpdate = false;
+
     public Poliman() {
         this(0, 0, 0);
     }
@@ -105,21 +107,11 @@ public class Poliman extends Personaje implements GameObject {
             this.setY(posicion.getY());
         }
 
-        // Si estamos en modo debug, para tener más precisión
-        // las flechas actualizan solo una vez el juego
-        if (game.isDebugEnabled()) {
-            if (game.hasKeyPressed(KeyCode.UP)) {
-                game.onKeyReleased(KeyCode.UP);
-            }
-            if (game.hasKeyPressed(KeyCode.LEFT)) {
-                game.onKeyReleased(KeyCode.LEFT);
-            }
-            if (game.hasKeyPressed(KeyCode.DOWN)) {
-                game.onKeyReleased(KeyCode.DOWN);
-            }
-            if (game.hasKeyPressed(KeyCode.RIGHT)) {
-                game.onKeyReleased(KeyCode.RIGHT);
-            }
+        // Para tener más precisión se actualiza solo una vez el juego
+        if (releaseOnUpdate) {
+            game.onKeyReleased(KeyCode.UP, KeyCode.LEFT, KeyCode.DOWN, KeyCode.RIGHT);
+            game.onKeyReleased(KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D);
+            game.onKeyReleased(KeyCode.H, KeyCode.J, KeyCode.K, KeyCode.L);
         }
     }
 
@@ -154,5 +146,17 @@ public class Poliman extends Personaje implements GameObject {
     @Override
     public void setSize(int size) {
         this.size = size;
+    }
+
+    public int getVelocity() {
+        return velocity;
+    }
+
+    public void setVelocity(int velocity) {
+        this.velocity = velocity;
+    }
+
+    public void setReleaseOnUpdate(boolean releaseOnUpdate) {
+        this.releaseOnUpdate = releaseOnUpdate;
     }
 }
