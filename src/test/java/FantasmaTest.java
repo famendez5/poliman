@@ -22,6 +22,6 @@ class FantasmaTest {
         poliman.update(game);
         fantasma.update(game);
         // El juego debe terminar
-        assertFalse(game.isGameOver());
+        assertTrue(game.isGameOver());
     }
 }
