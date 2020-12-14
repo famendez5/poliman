@@ -280,8 +280,6 @@ class PolimanTest {
         // Continuando hacia la izq
         poliman.update(game);
     }
-<<<<<<< HEAD
-=======
 
     @Test
     void testReleaseKeysOnUpdate() {
@@ -294,5 +292,4 @@ class PolimanTest {
 
         assertFalse(game.hasKeyPressed(KeyCode.UP));
     }
->>>>>>> 8a906aa08749664f810499885c9e4efd7d77caed
 }

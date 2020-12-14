@@ -26,6 +26,7 @@ public class PolimanGame extends AnimationTimer {
 
     private int score = 0;
     private boolean debugEnabled;
+    private boolean gameOver;
 
     // Contiene las teclas presionadas
     private final Set<KeyCode> pressedKeys = new HashSet<>();
@@ -128,23 +129,23 @@ public class PolimanGame extends AnimationTimer {
 
     @Override
     public void handle(long now) {
-        if(Fantasma.ghostSameCell){
+        if (isGameOver()) {
             return;
-        }else{
-            graphicsContext.clearRect(0, 0, WIDTH, getHeight());
-            graphicsContext.setFill(Color.BLACK);
-            graphicsContext.fillRect(0, 0, WIDTH, getHeight());
+        }
 
-            renderStatusBar();
+        graphicsContext.clearRect(0, 0, WIDTH, getHeight());
+        graphicsContext.setFill(Color.BLACK);
+        graphicsContext.fillRect(0, 0, WIDTH, getHeight());
 
-            if (isDebugEnabled()) {
-                renderDebugBar();
-            }
+        renderStatusBar();
 
-            for (GameObject gameObject : gameObjects) {
-                gameObject.update(this);
-                gameObject.render(graphicsContext);
-            }
+        if (isDebugEnabled()) {
+            renderDebugBar();
+        }
+
+        for (GameObject gameObject : gameObjects) {
+            gameObject.update(this);
+            gameObject.render(graphicsContext);
         }
     }
 
@@ -200,5 +201,21 @@ public class PolimanGame extends AnimationTimer {
         if (canvas != null) {
             canvas.setHeight(getHeight());
         }
+    }
+
+    /**
+     * Indica si el juego ya terminó
+     * @return
+     */
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+    /**
+     * Cambiar el estado del juego
+     * @param gameOver
+     */
+    public void setGameOver(boolean gameOver) {
+        this.gameOver = gameOver;
     }
 }

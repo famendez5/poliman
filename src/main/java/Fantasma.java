@@ -10,7 +10,10 @@ public class Fantasma extends Personaje implements GameObject {
     private final String nombre;
     private int size;
     private final RandomGenerator randomGenerator;
-    public static boolean ghostSameCell;
+
+    public Fantasma() {
+        this("unknown", "0000ff");
+    }
 
     public Fantasma(String color, String nombre) {
         this(color, nombre, 0, 0, 0);
@@ -55,10 +58,8 @@ public class Fantasma extends Personaje implements GameObject {
     public void update(PolimanGame game) {
         Posicion posicion = new Posicion(getX(), getY());
         Poliman poliman = game.getPoliman();
-        Posicion polimanPosicion = new Posicion(poliman.getX(), poliman.getY());
-        if (polimanPosicion.between(posicion, new Posicion(getX() , getY() )) ||
-                posicion.between(polimanPosicion, polimanPosicion.plusX(poliman.getSize() - 1).plusY(poliman.getSize() - 1))) {
-            this.ghostSameCell = true;
+        if (this.overlaps(poliman)) {
+            game.setGameOver(true);
         }
 
         switch (direccion) {
