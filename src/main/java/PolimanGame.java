@@ -77,22 +77,6 @@ public class PolimanGame extends AnimationTimer {
                 gameObjects.add(col);
             }
         }
-
-        /*for (int i = 0; i < cells; i++) {
-            gameObjects.add(new Celda(x + i * size, y, size));
-        }
-        for (int i = 0; i < cells; i++) {
-            gameObjects.add(new Punto(x + i * size, y + size, size));
-        }
-        for (int i = 0; i < cells; i++) {
-            gameObjects.add(new PuntoGrande(x + i * size, y + size * 2, size));
-        }
-        for (int i = 0; i < cells; i++) {
-            gameObjects.add(new Poliman(x + i * size, y + size * 3, size));
-        }
-        for (int i = 0; i < cells; i++) {
-            gameObjects.add(new Fantasma(i % 2 == 0 ? "ff0000" : "FCD34D", "Billy", x + i * size, y + size * 4, size));
-        }*/
     }
 
     public void setup() {
@@ -100,41 +84,15 @@ public class PolimanGame extends AnimationTimer {
         graphicsContext = canvas.getGraphicsContext2D();
     }
 
-    public GameObject findOverlappingObject(GameObject other) {
-        for (GameObject gameObject: gameObjects) {
-            if (gameObject == other) continue;
-            if (gameObject.overlaps(other)) {
-                return gameObject;
-            }
-        }
-        return null;
-    }
-
     public GameObject getObjectAt(Posicion posicion) {
         for (GameObject gameObject : gameObjects) {
             boolean inX = gameObject.getX() <= posicion.getX() && gameObject.getX() + gameObject.getSize() > posicion.getX();
             boolean inY = gameObject.getY() <= posicion.getY() && gameObject.getY() + gameObject.getSize() > posicion.getY();
             if (inX && inY) {
-                // System.out.println(gameObject.getX() + " < " + posicion.getX() + " && " + gameObject.getX() + " + " + gameObject.getSize() + " > " + posicion.getX());
-                // System.out.println(gameObject.getY() + " < " + posicion.getY() + " && " + gameObject.getY() + " + " + gameObject.getSize() + " > " + posicion.getY());
                 return gameObject;
             }
         }
         return null;
-    }
-
-    public List<GameObject> getObjectsAt(Posicion posicion) {
-        List<GameObject> matches = new LinkedList<>();
-        for (GameObject gameObject : gameObjects) {
-            boolean inX = gameObject.getX() <= posicion.getX() && gameObject.getX() + gameObject.getSize() > posicion.getX();
-            boolean inY = gameObject.getY() <= posicion.getY() && gameObject.getY() + gameObject.getSize() > posicion.getY();
-            if (inX && inY) {
-                System.out.println(gameObject.getX() + " <= " + posicion.getX() + " && " + gameObject.getX() + " + " + gameObject.getSize() + " > " + posicion.getX());
-                System.out.println(gameObject.getY() + " <= " + posicion.getY() + " && " + gameObject.getY() + " + " + gameObject.getSize() + " > " + posicion.getY());
-                matches.add(gameObject);
-            }
-        }
-        return matches;
     }
 
     public Canvas getCanvas() {
