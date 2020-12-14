@@ -14,6 +14,11 @@ public class Poliman extends Personaje implements GameObject {
 
     private int size;
 
+<<<<<<< HEAD
+=======
+    private boolean releaseOnUpdate = false;
+
+>>>>>>> 8a906aa08749664f810499885c9e4efd7d77caed
     public Poliman() {
         this(0, 0, 0);
     }
@@ -31,7 +36,11 @@ public class Poliman extends Personaje implements GameObject {
         return direccion;
     }
 
+<<<<<<< HEAD
     int velocity = 20;
+=======
+    int velocity = 1;
+>>>>>>> 8a906aa08749664f810499885c9e4efd7d77caed
 
     /**
      * Calcular la nueva dirección en base a las teclas presionadas.
@@ -105,6 +114,7 @@ public class Poliman extends Personaje implements GameObject {
             this.setY(posicion.getY());
         }
 
+<<<<<<< HEAD
         // Si estamos en modo debug, para tener más precisión
         // las flechas actualizan solo una vez el juego
         if (game.isDebugEnabled()) {
@@ -120,6 +130,13 @@ public class Poliman extends Personaje implements GameObject {
             if (game.hasKeyPressed(KeyCode.RIGHT)) {
                 game.onKeyReleased(KeyCode.RIGHT);
             }
+=======
+        // Para tener más precisión se actualiza solo una vez el juego
+        if (releaseOnUpdate) {
+            game.onKeyReleased(KeyCode.UP, KeyCode.LEFT, KeyCode.DOWN, KeyCode.RIGHT);
+            game.onKeyReleased(KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D);
+            game.onKeyReleased(KeyCode.H, KeyCode.J, KeyCode.K, KeyCode.L);
+>>>>>>> 8a906aa08749664f810499885c9e4efd7d77caed
         }
     }
 
@@ -155,4 +172,19 @@ public class Poliman extends Personaje implements GameObject {
     public void setSize(int size) {
         this.size = size;
     }
+<<<<<<< HEAD
+=======
+
+    public int getVelocity() {
+        return velocity;
+    }
+
+    public void setVelocity(int velocity) {
+        this.velocity = velocity;
+    }
+
+    public void setReleaseOnUpdate(boolean releaseOnUpdate) {
+        this.releaseOnUpdate = releaseOnUpdate;
+    }
+>>>>>>> 8a906aa08749664f810499885c9e4efd7d77caed
 }

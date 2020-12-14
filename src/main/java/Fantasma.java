@@ -10,7 +10,10 @@ public class Fantasma extends Personaje implements GameObject {
     private final String nombre;
     private int size;
     private final RandomGenerator randomGenerator;
+<<<<<<< HEAD
     public static boolean ghostSameCell;
+=======
+>>>>>>> 8a906aa08749664f810499885c9e4efd7d77caed
 
     public Fantasma(String color, String nombre) {
         this(color, nombre, 0, 0, 0);
@@ -54,12 +57,16 @@ public class Fantasma extends Personaje implements GameObject {
     @Override
     public void update(PolimanGame game) {
         Posicion posicion = new Posicion(getX(), getY());
+<<<<<<< HEAD
         Poliman poliman = game.getPoliman();
         Posicion polimanPosicion = new Posicion(poliman.getX(), poliman.getY());
         if (polimanPosicion.between(posicion, new Posicion(getX() , getY() )) ||
                 posicion.between(polimanPosicion, polimanPosicion.plusX(poliman.getSize() - 1).plusY(poliman.getSize() - 1))) {
             this.ghostSameCell = true;
         }
+=======
+
+>>>>>>> 8a906aa08749664f810499885c9e4efd7d77caed
         switch (direccion) {
             case ARRIBA:
                 if (game.getObjectAt(posicion.plusY(-velocity)) instanceof Celda) {
