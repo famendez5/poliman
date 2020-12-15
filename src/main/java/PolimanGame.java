@@ -1,10 +1,12 @@
 import javafx.animation.AnimationTimer;
+import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.TextAlignment;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -127,12 +129,20 @@ public class PolimanGame extends AnimationTimer {
         graphicsContext.fillText("Posición Poliman: " + poliman.getX() + ", " + poliman.getY(), PADDING, y + SIZE + PADDING);
     }
 
+    private void renderGameOver() {
+        graphicsContext.setFill(Color.WHITE);
+        graphicsContext.setFont(Font.font("Times New Roman", FontWeight.BOLD, SIZE * 2));
+        graphicsContext.setTextAlign(TextAlignment.CENTER);
+        graphicsContext.setTextBaseline(VPos.CENTER);
+        graphicsContext.fillText("Game Over", PADDING, STATUS_BAR_HEIGHT + PADDING);
+    }
+
+    private void renderGameWon() {
+
+    }
+
     @Override
     public void handle(long now) {
-        if (isGameOver()) {
-            return;
-        }
-
         graphicsContext.clearRect(0, 0, WIDTH, getHeight());
         graphicsContext.setFill(Color.BLACK);
         graphicsContext.fillRect(0, 0, WIDTH, getHeight());
@@ -141,6 +151,14 @@ public class PolimanGame extends AnimationTimer {
 
         if (isDebugEnabled()) {
             renderDebugBar();
+        }
+
+        if (isGameOver()) {
+            renderGameOver();
+            return;
+        } else if (isGameWon()) {
+            renderGameWon();
+            return;
         }
 
         for (GameObject gameObject : gameObjects) {
