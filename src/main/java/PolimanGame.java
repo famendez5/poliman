@@ -108,7 +108,8 @@ public class PolimanGame extends AnimationTimer {
     private void renderStatusBar() {
         graphicsContext.setFill(Color.web("6366F1"));
         graphicsContext.fillRect(0, 0, WIDTH, STATUS_BAR_HEIGHT);
-
+        graphicsContext.setTextAlign(TextAlignment.LEFT);
+        graphicsContext.setTextBaseline(VPos.BOTTOM);
         graphicsContext.setFill(Color.WHITE);
         graphicsContext.setFont(Font.font("Times New Roman", FontWeight.BOLD, SIZE));
         graphicsContext.fillText("Puntaje: " + getScore(), PADDING, PADDING + SIZE);
@@ -121,7 +122,8 @@ public class PolimanGame extends AnimationTimer {
         int y = getHeight() - DEBUG_BAR_HEIGHT;
         graphicsContext.setFill(Color.web("F59E0B"));
         graphicsContext.fillRect(0, y, WIDTH, DEBUG_BAR_HEIGHT);
-
+        graphicsContext.setTextAlign(TextAlignment.LEFT);
+        graphicsContext.setTextBaseline(VPos.BOTTOM);
         graphicsContext.setFill(Color.WHITE);
         graphicsContext.setFont(Font.font("Times New Roman", FontWeight.BOLD, SIZE));
         // graphicsContext.fillText("Teclas presionadas: " + getPressedKeysString(), PADDING, y + SIZE + PADDING);
