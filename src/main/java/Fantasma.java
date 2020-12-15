@@ -9,6 +9,7 @@ public class Fantasma extends Personaje implements GameObject {
     private final String color;
     private final String nombre;
     private final RandomGenerator randomGenerator;
+    private boolean scared;
 
     public Fantasma() {
         this("unknown", "0000ff");
@@ -52,6 +53,20 @@ public class Fantasma extends Personaje implements GameObject {
     private Direccion nuevaDireccion() {
         Direccion[] direcciones = Direccion.values();
         return direcciones[(int) Math.floor(this.randomGenerator.generate() * direcciones.length)];
+    }
+
+    /**
+     * Asignar el estado del fantasma
+     */
+    public void setScared(boolean scared) {
+        this.scared = scared;
+    }
+
+    /**
+     * Indica si el fantasma está asustado
+     */
+    public boolean isScared() {
+        return scared;
     }
 
     @Override

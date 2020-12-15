@@ -23,6 +23,20 @@ public class Punto extends BaseGameObject implements GameObject {
         this.score = score;
     }
 
+    /**
+     * Cambiar el estado del punto
+     */
+    public void setUsed(boolean used) {
+        this.used = used;
+    }
+
+    /**
+     * Indica si ya se usó el punto
+     */
+    public boolean isUsed() {
+        return used;
+    }
+
     @Override
     public void update(PolimanGame game) {
         if (used) return;
