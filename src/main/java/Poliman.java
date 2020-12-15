@@ -4,15 +4,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
 
 import java.util.function.Predicate;
-import java.util.stream.Stream;
 
 /**
  * Poliman es el personaje principal del juego
  */
 public class Poliman extends Personaje implements GameObject {
-    private Direccion direccion;
-
-    private int size;
 
     private boolean releaseOnUpdate = false;
 
@@ -21,19 +17,9 @@ public class Poliman extends Personaje implements GameObject {
     }
 
     public Poliman(int x, int y, int size) {
-        super(x, y);
-        this.direccion = Direccion.ABAJO;
-        this.size = size;
+        super(x, y, size);
+        setDireccion(Direccion.ABAJO);
     }
-
-    /**
-     * Retorna la dirección actual de poliman
-     */
-    public Direccion getDireccion() {
-        return direccion;
-    }
-
-    int velocity = 1;
 
     /**
      * Calcular la nueva dirección en base a las teclas presionadas.
@@ -60,25 +46,25 @@ public class Poliman extends Personaje implements GameObject {
             return;
         }
 
-        direccion = nuevaDireccion;
+        setDireccion(nuevaDireccion);
 
         // Guardamos la posición inicial
         Posicion posicion = new Posicion(getX(), getY());
         Posicion nuevaPosicion;
 
         // Calculamos la nueva posición en base a la dirección
-        switch (direccion) {
+        switch (getDireccion()) {
             case ARRIBA:
-                nuevaPosicion = posicion.plusY(-velocity);
+                nuevaPosicion = posicion.plusY(-getVelocity());
                 break;
             case ABAJO:
-                nuevaPosicion = posicion.plusY(velocity);
+                nuevaPosicion = posicion.plusY(getVelocity());
                 break;
             case IZQUIERDA:
-                nuevaPosicion = posicion.plusX(-velocity);
+                nuevaPosicion = posicion.plusX(-getVelocity());
                 break;
             case DERECHA:
-                nuevaPosicion = posicion.plusX(velocity);
+                nuevaPosicion = posicion.plusX(getVelocity());
                 break;
             default:
                 return;
@@ -135,25 +121,7 @@ public class Poliman extends Personaje implements GameObject {
     @Override
     public void render(GraphicsContext context) {
         context.setFill(Color.YELLOW);
-        context.fillArc(getX(), getY(), size, size, Poliman.getStartAngle(getDireccion()), 360 - 90, ArcType.ROUND);
-    }
-
-    @Override
-    public int getSize() {
-        return size;
-    }
-
-    @Override
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    public int getVelocity() {
-        return velocity;
-    }
-
-    public void setVelocity(int velocity) {
-        this.velocity = velocity;
+        context.fillArc(getX(), getY(), getSize(), getSize(), Poliman.getStartAngle(getDireccion()), 360 - 90, ArcType.ROUND);
     }
 
     public void setReleaseOnUpdate(boolean releaseOnUpdate) {

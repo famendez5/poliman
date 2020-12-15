@@ -8,7 +8,6 @@ import javafx.scene.paint.Color;
 public class Fantasma extends Personaje implements GameObject {
     private final String color;
     private final String nombre;
-    private int size;
     private final RandomGenerator randomGenerator;
 
     public Fantasma() {
@@ -20,20 +19,17 @@ public class Fantasma extends Personaje implements GameObject {
     }
 
     public Fantasma(String color, String nombre, int x, int y, int size) {
-        super(x, y);
+        super(x, y, size);
         assert color != null;
         assert nombre != null;
 
         this.color = color;
         this.nombre = nombre;
-        this.size = size;
         this.randomGenerator = Math::random;
 
-        direccion = nuevaDireccion();
-        velocity = 1 + (int) Math.floor(randomGenerator.generate() * 3);
+        setDireccion(nuevaDireccion());
+        setVelocity(1 + (int) Math.floor(randomGenerator.generate() * 3));
     }
-    private Direccion direccion;
-    private final int velocity;
 
     /**
      * Retorna el color del fantasma en formato hexadecimal
@@ -49,6 +45,10 @@ public class Fantasma extends Personaje implements GameObject {
         return nombre;
     }
 
+    /**
+     * Generar una nueva dirección
+     * @return
+     */
     private Direccion nuevaDireccion() {
         Direccion[] direcciones = Direccion.values();
         return direcciones[(int) Math.floor(this.randomGenerator.generate() * direcciones.length)];
@@ -62,34 +62,34 @@ public class Fantasma extends Personaje implements GameObject {
             game.setGameOver(true);
         }
 
-        switch (direccion) {
+        switch (getDireccion()) {
             case ARRIBA:
-                if (game.getObjectAt(posicion.plusY(-velocity)) instanceof Celda) {
-                    direccion = nuevaDireccion();
+                if (game.getObjectAt(posicion.plusY(-getVelocity())) instanceof Celda) {
+                    setDireccion(nuevaDireccion());
                     return;
                 }
-                this.setY(getY() - velocity);
+                this.setY(getY() - getVelocity());
                 break;
             case ABAJO:
-                if (game.getObjectAt(posicion.plusY(velocity + getSize())) instanceof Celda) {
-                    direccion = nuevaDireccion();
+                if (game.getObjectAt(posicion.plusY(getVelocity() + getSize())) instanceof Celda) {
+                    setDireccion(nuevaDireccion());
                     return;
                 }
-                this.setY(getY() + velocity);
+                this.setY(getY() + getVelocity());
                 break;
             case IZQUIERDA:
-                if (game.getObjectAt(posicion.plusX(-velocity)) instanceof Celda) {
-                    direccion = nuevaDireccion();
+                if (game.getObjectAt(posicion.plusX(-getVelocity())) instanceof Celda) {
+                    setDireccion(nuevaDireccion());
                     return;
                 }
-                this.setX(getX() - velocity);
+                this.setX(getX() - getVelocity());
                 break;
             case DERECHA:
-                if (game.getObjectAt(posicion.plusX(velocity + getSize())) instanceof Celda) {
-                    direccion = nuevaDireccion();
+                if (game.getObjectAt(posicion.plusX(getVelocity() + getSize())) instanceof Celda) {
+                    setDireccion(nuevaDireccion());
                     return;
                 }
-                this.setX(getX() + velocity);
+                this.setX(getX() + getVelocity());
                 break;
         }
     }
@@ -98,8 +98,8 @@ public class Fantasma extends Personaje implements GameObject {
     public void render(GraphicsContext context) {
         context.setFill(Color.web(getColor()));
         int horizontalPadding = 2;
-        double width = this.size - horizontalPadding * 2;
-        double height = this.size;
+        double width = getSize() - horizontalPadding * 2;
+        double height = getSize();
         double headHeight = height / 3.0;
         double bodyHeight = height / 3.0;
         double feetHeight = height - headHeight - bodyHeight;
@@ -168,15 +168,5 @@ public class Fantasma extends Personaje implements GameObject {
         context.closePath();
         context.fill();*/
 
-    }
-
-    @Override
-    public int getSize() {
-        return size;
-    }
-
-    @Override
-    public void setSize(int size) {
-        this.size = size;
     }
 }

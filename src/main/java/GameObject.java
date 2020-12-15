@@ -15,54 +15,64 @@ public interface GameObject {
      */
     void render(GraphicsContext context);
 
-    void setX(int x);
-    int getX();
-    void setY(int x);
-    int getY();
+    /**
+     * Asignar la posición del objeto
+     * @param pos
+     */
+    void setPosicion(Posicion pos);
+
+    /**
+     * Retornar la posición del objeto
+     * @return
+     */
+    Posicion getPosicion();
+
+    /**
+     * Retorna la posición en el eje X del objeto
+     * @return
+     */
+    default int getX() {
+        return getPosicion().getX();
+    }
+
+    /**
+     * Asignar la posición en el eje X del objeto
+     */
+    default void setX(int x) {
+        getPosicion().setX(x);
+    }
+
+    /**
+     * Retorna la posición en el eje Y del objeto
+     * @return
+     */
+    default int getY() {
+        return getPosicion().getY();
+    }
+
+    /**
+     * Asignar la posición en el eje Y del objeto
+     */
+    default void setY(int y) {
+        getPosicion().setY(y);
+    }
+
+    /**
+     * Asignar el tamaño del objeto
+     * @param size
+     */
     void setSize(int size);
+
+    /**
+     * Retornar el tamaño del objeto
+     * @return
+     */
     int getSize();
-
-    default Posicion getPosicion() {
-        return new Posicion(getX(), getY());
-    }
-
-    /**
-     * Verifica si el otro objeto está entre este, desde el punto
-     * superior izquierdo hasta el punto inferior derecho
-     * @param other
-     * @return
-     */
-    default boolean betweenTopLeftAndBottomRight(GameObject other) {
-        Posicion otherBottomRight = other.getPosicion().plusX(getSize() - 1).plusY(getSize() - 1);
-        return getPosicion().between(other.getPosicion(), otherBottomRight);
-    }
-
-    /**
-     * Verifica si el otro objeto está entre este, desde el punto
-     * superior derecho hasta el punto inferior izquierdo
-     * @param other
-     * @return
-     */
-    default boolean betweenTopRightAndBottomLeft(GameObject other) {
-        Posicion topRight = getPosicion().plusX(getSize() - 1);
-        Posicion otherBottomRight = other.getPosicion().plusX(getSize() - 1).plusY(getSize() - 1);
-        return topRight.between(other.getPosicion(), otherBottomRight);
-    }
 
     /**
      * Verifica si este objeto y otro se superponen
      * @param other
      * @return
      */
-    default boolean overlaps(GameObject other) {
-        if (this.betweenTopLeftAndBottomRight(other) || other.betweenTopLeftAndBottomRight(this)) {
-            return true;
-        }
-
-        if (this.betweenTopRightAndBottomLeft(other) || other.betweenTopRightAndBottomLeft(this)) {
-            return true;
-        }
-
-        return false;
-    }
+    boolean overlaps(GameObject other);
 }

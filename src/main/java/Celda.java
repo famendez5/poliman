@@ -1,20 +1,16 @@
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class Celda implements GameObject {
-    private int x;
-    private int y;
-    private int size;
+public class Celda extends BaseGameObject implements GameObject {
 
     public Celda() {
         this(0, 0, 0);
     }
 
     public Celda(int x, int y, int size) {
-        this.x = x;
-        this.y = y;
-        this.size = size;
+        super(x, y, size);
     }
+
     private String color = "1D4ED8";
 
     public void setColor(String color) {
@@ -29,37 +25,7 @@ public class Celda implements GameObject {
     @Override
     public void render(GraphicsContext context) {
         context.setFill(Color.web(color));
-        context.fillRect(x, y, size, size);
-    }
-
-    @Override
-    public int getX() {
-        return x;
-    }
-
-    @Override
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    @Override
-    public int getY() {
-        return y;
-    }
-
-    @Override
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    @Override
-    public int getSize() {
-        return size;
-    }
-
-    @Override
-    public void setSize(int size) {
-        this.size = size;
+        context.fillRect(getX(), getY(), getSize(), getSize());
     }
 }
 

@@ -2,40 +2,41 @@
  * Personaje es la clase base que contiene las características comunes
  * de los personajes del juego: poliman y los fantasmas.
  */
-public abstract class Personaje {
-    private int x;
-    private int y;
+public abstract class Personaje extends BaseGameObject {
+    private Direccion direccion;
+    private int velocity = 1;
 
-    public Personaje(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public Personaje(int x, int y, int size) {
+        super(x, y, size);
     }
 
     /**
-     * Retorna la posición X del personaje
+     * Obtener la dirección del personaje
+     * @return
      */
-    public int getX() {
-        return x;
+    public Direccion getDireccion() {
+        return direccion;
     }
 
     /**
-     * Asigna la posición X del personaje
+     * Asignar la dirección del personaje
+     * @param direccion
      */
-    public void setX(int x) {
-        this.x = x;
+    public void setDireccion(Direccion direccion) {
+        this.direccion = direccion;
     }
 
     /**
-     * Retorna la posición Y del personaje
+     * Obtener la velocidad del personaje
      */
-    public int getY() {
-        return y;
+    public int getVelocity() {
+        return velocity;
     }
 
     /**
-     * Asigna la posición Y del personaje
+     * Asignar la velocidad del personaje
      */
-    public void setY(int y) {
-        this.y = y;
+    public void setVelocity(int velocity) {
+        this.velocity = velocity;
     }
 }

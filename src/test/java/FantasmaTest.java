@@ -8,6 +8,7 @@ class FantasmaTest {
     void testTerminaJuegoSiAtrapaAPoliman() {
         Poliman poliman = new Poliman();
         Fantasma fantasma = new Fantasma();
+        fantasma.setDireccion(Direccion.ARRIBA);
         PolimanGame game = new PolimanGame(new GameObject[][]{
                 {poliman, fantasma},
         });
