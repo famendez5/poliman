@@ -218,4 +218,14 @@ public class PolimanGame extends AnimationTimer {
     public void setGameOver(boolean gameOver) {
         this.gameOver = gameOver;
     }
+
+    /**
+     * Indica si el juego ha sido ganado
+     */
+    public boolean isGameWon() {
+        return gameObjects.stream()
+                .filter(Punto.class::isInstance)
+                .map(Punto.class::cast)
+                .allMatch(Punto::isUsed);
+    }
 }

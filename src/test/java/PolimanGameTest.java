@@ -28,4 +28,30 @@ class PolimanGameTest {
         assertFalse(game.hasKeyPressed(KeyCode.UP));
         assertFalse(game.hasKeyPressed(KeyCode.LEFT));
     }
+
+    @Test
+    void testGameWon() {
+        Punto punto1 = new Punto();
+        Punto punto2 = new Punto();
+        Punto punto3 = new Punto();
+        PuntoGrande punto4 = new PuntoGrande();
+
+        PolimanGame game = new PolimanGame(new GameObject[][]{
+                {punto1, punto2, punto3, punto4}
+        });
+
+        assertFalse(game.isGameWon());
+
+        punto1.setUsed(true);
+        assertFalse(game.isGameWon());
+
+        punto2.setUsed(true);
+        assertFalse(game.isGameWon());
+
+        punto3.setUsed(true);
+        assertFalse(game.isGameWon());
+
+        punto4.setUsed(true);
+        assertTrue(game.isGameWon());
+    }
 }
