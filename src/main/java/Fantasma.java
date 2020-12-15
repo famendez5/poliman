@@ -1,8 +1,6 @@
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-import java.util.function.Predicate;
-
 /**
  * Fantasma es la clase que contiene las características y comportamientos
  * de los rivales de poliman.
@@ -112,44 +110,5 @@ public class Fantasma extends Personaje implements GameObject {
         context.setFill(Color.BLUE);
         context.fillOval(leftPupileX, leftPupileY, pupileWidth, pupileHeight);
         context.fillOval(leftPupileX + width / 2, leftPupileY, pupileWidth, pupileHeight);
-
-        /*context.beginPath();
-        context.moveTo(x + width, y + headHeight);
-        // context.quadraticCurveTo(x + width / 2.0, y, x, y + headHeight);
-        context.bezierCurveTo(x, y, x + width, y, x, y + headHeight);
-        context.lineTo(x, y + height - feetHeight);
-        double feetWidth = width / 3.0;
-        context.quadraticCurveTo(x + feetWidth / 2, y + height, x + feetWidth, y + height - feetHeight);
-        context.quadraticCurveTo(x + feetWidth / 2 + feetWidth, y + height, x + feetWidth + feetWidth, y + height - feetHeight);
-        context.quadraticCurveTo(x + feetWidth / 2 + feetWidth * 2, y + height, x + feetWidth + feetWidth * 2, y + height - feetHeight);
-        context.lineTo(x + width, y + headHeight);
-        context.closePath();
-        context.fill();*/
-
-        /*context.fillRect(x, y + headHeight, width, bodyHeight);
-
-
-        context.beginPath();
-        context.moveTo(x, y + height - feetHeight);
-        double feetWidth = width / 3.0;
-        /*context.bezierCurveTo(x, y + size - feetHeight,
-                x + feetSize / 2, y + size,
-                x, y);*/
-//        context.quadraticCurveTo(x, y + size,x + feetSize / 2, y + size);
-      /*  context.quadraticCurveTo(x + feetWidth / 2, y + height, x + feetWidth, y + height - feetHeight);
-        context.quadraticCurveTo(x + feetWidth / 2 + feetWidth, y + height, x + feetWidth + feetWidth, y + height - feetHeight);
-        context.quadraticCurveTo(x + feetWidth / 2 + feetWidth * 2, y + height, x + feetWidth + feetWidth * 2, y + height - feetHeight);
-        context.closePath();
-        context.fill();*/
-
-
-
-/*
-        context.beginPath();
-        context.moveTo(x, y + headHeight);
-        context.quadraticCurveTo(x + width / 2.0, y, x + width, y + headHeight);
-        context.closePath();
-        context.fill();*/
-
     }
 }

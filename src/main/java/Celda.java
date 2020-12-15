@@ -1,6 +1,9 @@
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+/**
+ * Una celda de la pared
+ */
 public class Celda extends BaseGameObject implements GameObject {
 
     public Celda() {
