@@ -1,3 +1,7 @@
+/**
+ * Un punto que da más puntos y que al ser comido
+ * por poliman, asusta a los fantasmas
+ */
 public class PuntoGrande extends Punto {
 
     public PuntoGrande() {

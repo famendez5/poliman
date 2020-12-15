@@ -39,4 +39,22 @@ public abstract class Personaje extends BaseGameObject {
     public void setVelocity(int velocity) {
         this.velocity = velocity;
     }
+
+    /**
+     * Calcular la nueva posición en base a la dirección y velocidad actual
+     * @return
+     */
+    public Posicion nuevaPosicion() {
+        switch (getDireccion()) {
+            case ARRIBA:
+                return getPosicion().plusY(-getVelocity());
+            case ABAJO:
+                return getPosicion().plusY(getVelocity());
+            case IZQUIERDA:
+                return getPosicion().plusX(-getVelocity());
+            case DERECHA:
+            default:
+                return getPosicion().plusX(getVelocity());
+        }
+    }
 }

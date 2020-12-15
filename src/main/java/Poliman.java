@@ -49,30 +49,11 @@ public class Poliman extends Personaje implements GameObject {
         setDireccion(nuevaDireccion);
 
         // Guardamos la posición inicial
-        Posicion posicion = new Posicion(getX(), getY());
-        Posicion nuevaPosicion;
-
-        // Calculamos la nueva posición en base a la dirección
-        switch (getDireccion()) {
-            case ARRIBA:
-                nuevaPosicion = posicion.plusY(-getVelocity());
-                break;
-            case ABAJO:
-                nuevaPosicion = posicion.plusY(getVelocity());
-                break;
-            case IZQUIERDA:
-                nuevaPosicion = posicion.plusX(-getVelocity());
-                break;
-            case DERECHA:
-                nuevaPosicion = posicion.plusX(getVelocity());
-                break;
-            default:
-                return;
-        }
+        Posicion posicion = getPosicion();
+        Posicion nuevaPosicion = nuevaPosicion();
 
         // Asignamos la nueva posición
-        this.setX(nuevaPosicion.getX());
-        this.setY(nuevaPosicion.getY());
+        this.setPosicion(nuevaPosicion);
 
         Predicate<GameObject> overlappingCellPredicate = (obj) -> obj != this && obj.overlaps(this) && obj instanceof Celda;
 
@@ -89,8 +70,7 @@ public class Poliman extends Personaje implements GameObject {
             }
 
             // Devolvemos el objeto a la posición inicial
-            this.setX(posicion.getX());
-            this.setY(posicion.getY());
+            this.setPosicion(posicion);
         }
 
         // Para tener más precisión se actualiza solo una vez el juego

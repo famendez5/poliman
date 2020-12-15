@@ -1,3 +1,6 @@
+/**
+ * La posición de un objeto en un plano 2D
+ */
 public class Posicion {
     private int x;
     private int y;

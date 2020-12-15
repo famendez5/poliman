@@ -39,7 +39,7 @@ public interface GameObject {
      * Asignar la posición en el eje X del objeto
      */
     default void setX(int x) {
-        getPosicion().setX(x);
+        setPosicion(new Posicion(x, getPosicion().getY()));
     }
 
     /**
@@ -54,7 +54,7 @@ public interface GameObject {
      * Asignar la posición en el eje Y del objeto
      */
     default void setY(int y) {
-        getPosicion().setY(y);
+        setPosicion(new Posicion(getPosicion().getX(), y));
     }
 
     /**

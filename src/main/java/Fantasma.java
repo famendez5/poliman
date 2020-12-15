@@ -1,6 +1,8 @@
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+import java.util.function.Predicate;
+
 /**
  * Fantasma es la clase que contiene las características y comportamientos
  * de los rivales de poliman.
@@ -56,41 +58,22 @@ public class Fantasma extends Personaje implements GameObject {
 
     @Override
     public void update(PolimanGame game) {
-        Posicion posicion = new Posicion(getX(), getY());
         Poliman poliman = game.getPoliman();
         if (this.overlaps(poliman)) {
             game.setGameOver(true);
         }
 
-        switch (getDireccion()) {
-            case ARRIBA:
-                if (game.getObjectAt(posicion.plusY(-getVelocity())) instanceof Celda) {
-                    setDireccion(nuevaDireccion());
-                    return;
-                }
-                this.setY(getY() - getVelocity());
-                break;
-            case ABAJO:
-                if (game.getObjectAt(posicion.plusY(getVelocity() + getSize())) instanceof Celda) {
-                    setDireccion(nuevaDireccion());
-                    return;
-                }
-                this.setY(getY() + getVelocity());
-                break;
-            case IZQUIERDA:
-                if (game.getObjectAt(posicion.plusX(-getVelocity())) instanceof Celda) {
-                    setDireccion(nuevaDireccion());
-                    return;
-                }
-                this.setX(getX() - getVelocity());
-                break;
-            case DERECHA:
-                if (game.getObjectAt(posicion.plusX(getVelocity() + getSize())) instanceof Celda) {
-                    setDireccion(nuevaDireccion());
-                    return;
-                }
-                this.setX(getX() + getVelocity());
-                break;
+        Posicion posicion = getPosicion();
+        Posicion nuevaPosicion = nuevaPosicion();
+
+        setPosicion(nuevaPosicion);
+
+        // Si en la nueva posición hay una celda
+        if (game.gameObjects.stream().anyMatch((obj) -> obj != this && obj.overlaps(this) && obj instanceof Celda)) {
+            // Devolvemos el objeto a la posición inicial
+            setDireccion(nuevaDireccion());
+            // Cambiamos de dirección
+            setPosicion(posicion);
         }
     }
 

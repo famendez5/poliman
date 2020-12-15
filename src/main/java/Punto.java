@@ -1,6 +1,9 @@
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+/**
+ * Un punto que al ser comido por pacman, le da puntos
+ */
 public class Punto extends BaseGameObject implements GameObject {
     private final double ratio;
     private final int score;
@@ -23,12 +26,9 @@ public class Punto extends BaseGameObject implements GameObject {
     @Override
     public void update(PolimanGame game) {
         if (used) return;
-        // Si pacman está en esta posición, marcar como usado y agregar puntaje
         Poliman poliman = game.getPoliman();
-        Posicion polimanPosicion = new Posicion(poliman.getX(), poliman.getY());
-        Posicion puntoPosicion = new Posicion(getX(), getY());
-        if (polimanPosicion.between(puntoPosicion, new Posicion(getX() + getSize() - 1, getY() + getSize() - 1)) ||
-                puntoPosicion.between(polimanPosicion, polimanPosicion.plusX(poliman.getSize() - 1).plusY(poliman.getSize() - 1))) {
+        // Si pacman está en esta posición, marcar como usado y agregar puntaje
+        if (this.overlaps(poliman)) {
             this.used = true;
             game.setScore(game.getScore() + score);
         }
