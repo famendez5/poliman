@@ -134,11 +134,15 @@ public class PolimanGame extends AnimationTimer {
         graphicsContext.setFont(Font.font("Times New Roman", FontWeight.BOLD, SIZE * 2));
         graphicsContext.setTextAlign(TextAlignment.CENTER);
         graphicsContext.setTextBaseline(VPos.CENTER);
-        graphicsContext.fillText("Game Over", PADDING, STATUS_BAR_HEIGHT + PADDING);
+        graphicsContext.fillText("Perdiste", WIDTH / 2.0, STATUS_BAR_HEIGHT + BASE_HEIGHT / 2.0);
     }
 
     private void renderGameWon() {
-
+        graphicsContext.setFill(Color.WHITE);
+        graphicsContext.setFont(Font.font("Times New Roman", FontWeight.BOLD, SIZE * 2));
+        graphicsContext.setTextAlign(TextAlignment.CENTER);
+        graphicsContext.setTextBaseline(VPos.CENTER);
+        graphicsContext.fillText("Ganaste", WIDTH / 2.0, STATUS_BAR_HEIGHT + BASE_HEIGHT / 2.0);
     }
 
     @Override
